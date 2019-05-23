@@ -1,0 +1,32 @@
+Package: avaliaR
+Type: Package
+Title: Ferramentas para Avaliações Educacionais Brasileiras
+Version: 0.0.1
+Date: 2019-05-07
+Author: Leandro Marino <leandromarino@leandromarino.com.br>, Tiago Fragoso
+    <tiago@cesgranrio.org.br>, Ruben Klein <kleinrub@gmail.com>
+Maintainer: Leandro Marino <leandromarino@leandromarino.com.br>, Tiago Fragoso
+    <tiago@cesgranrio.org.br>
+Description: Um conjunto de rotinas para lidar com dados provenientes de
+    avaliações educacionais. Desde o cômputo de Estatísticas Clássicas para 
+    itens dictômicos e politômicos, leitura de arquivos do BilogMG 
+    (BLG, PRM, SCO, EXP, entre outros), gráficos de qualidade de ajuste, 
+    análise de comportamento diferencial do item e exportação de resultados.
+License: GPL (>= 2)
+LazyData: false
+Imports:
+    Rcpp (>= 0.12.3),
+    Hmisc,
+    flextable,
+    officer,
+    gdtools,
+    xlsx,
+    magrittr,
+    usethis
+LinkingTo: Rcpp
+Encoding: UTF-8
+RoxygenNote: 6.1.1
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
