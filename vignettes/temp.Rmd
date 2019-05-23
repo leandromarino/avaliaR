@@ -1,10 +1,8 @@
 ---
-title: "Como usar o `avaliaR`"
-output: 
-  md_document: 
-    variant: gfm
+title: "Como usar o `avaliaR` temp"
+output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{como_usar_o_avaliaR}
+  %\VignetteIndexEntry{temp}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

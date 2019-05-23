@@ -1,27 +1,20 @@
 ---
-title: "Como usar o `avaliaR`"
+title: "Como usar o `avaliaR` temp"
 output: 
   md_document: 
     variant: gfm
 vignette: >
-  %\VignetteIndexEntry{como_usar_o_avaliaR}
+  %\VignetteIndexEntry{temp}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
 
-library(magrittr)
-
-```
 
 ## Carregando o pacote
 Para carregar o pacote basta utilizar o comando:
-```{r setup}
+
+```r
 library(avaliaR)
 ```
 
@@ -39,36 +32,23 @@ em blocos de tal forma que temos 3 blocos independente de itens cada qual com 12
 Então, nesse processo avaliativo temos, ao todo, 36 itens. Esses blocos são distribuídos
 em 3 cadernos seguindo a seguinte disposição:
 
-```{r cadernos, echo = FALSE}
-cadernos <- data.frame("Sequêncial" = 1:3,
-                       "Caderno" = LETTERS[1:3],
-                       "Parte 1" = paste0('Bloco: ', c(1,2,3)),
-                       "Parte 2" = paste0('Bloco: ', c(2,3,1)),
-                       "Parte 3" = paste0('Bloco: ', c(3,1,2)))
 
-knitr::kable(cadernos, 
-             align = c('c', 'c', 'c', 'c', 'c'),
-             caption = 'Distribuição dos Blocos nos Cadernos de Prova')
-```
+| Sequêncial | Caderno | Parte.1  | Parte.2  | Parte.3  |
+|:----------:|:-------:|:--------:|:--------:|:--------:|
+|     1      |    A    | Bloco: 1 | Bloco: 2 | Bloco: 3 |
+|     2      |    B    | Bloco: 2 | Bloco: 3 | Bloco: 1 |
+|     3      |    C    | Bloco: 3 | Bloco: 1 | Bloco: 2 |
 
 Essa é uma avaliação em que todos os cadernos possuem exatamente a mesma 
 quantidade de itens. Assim, a disposição dos itens pelos cadernos de provas 
 fica como se segue:
 
-```{r itens, echo = FALSE}
 
-itens <- matrix(c(1:36, c(13:36,1:12), c(25:36,1:24)), byrow = T, nrow = 3)  %>%
-  data.frame %>%
-  set_colnames(x = . , value = paste0('P', 1:36))
-
-itens <- cbind.data.frame("Seq." = 1:3,
-                          "Cad." = LETTERS[1:3],
-                          itens,
-                          stringsAsFactors = FALSE)
-
-knitr::kable(itens, align = 'c', 
-             caption = 'Distribuição dos itens nos Cadernos de Prova')
-```
+| Seq. | Cad. | P1 | P2 | P3 | P4 | P5 | P6 | P7 | P8 | P9 | P10 | P11 | P12 | P13 | P14 | P15 | P16 | P17 | P18 | P19 | P20 | P21 | P22 | P23 | P24 | P25 | P26 | P27 | P28 | P29 | P30 | P31 | P32 | P33 | P34 | P35 | P36 |
+|:----:|:----:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|  1   |  A   | 1  | 2  | 3  | 4  | 5  | 6  | 7  | 8  | 9  | 10  | 11  | 12  | 13  | 14  | 15  | 16  | 17  | 18  | 19  | 20  | 21  | 22  | 23  | 24  | 25  | 26  | 27  | 28  | 29  | 30  | 31  | 32  | 33  | 34  | 35  | 36  |
+|  2   |  B   | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22  | 23  | 24  | 25  | 26  | 27  | 28  | 29  | 30  | 31  | 32  | 33  | 34  | 35  | 36  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  | 10  | 11  | 12  |
+|  3   |  C   | 25 | 26 | 27 | 28 | 29 | 30 | 31 | 32 | 33 | 34  | 35  | 36  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  | 10  | 11  | 12  | 13  | 14  | 15  | 16  | 17  | 18  | 19  | 20  | 21  | 22  | 23  | 24  |
 
 ### Estrutura da Prova
 
@@ -78,9 +58,24 @@ isso, iremos utilizar a função `gera_itens_caderno`.  Esta função
 permite a entrada de cadernos de tamanho diferentes. Cada caderno deve 
 ser um vetor com o sequencial dos itens que o compõem. 
 
-```{r gera_itens_caderno}
+
+```r
 itcaderno <- gera_itens_caderno(1:36, c(13:36,1:12), c(25:36,1:24))
 itcaderno
+#> $cad001
+#>  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+#> [24] 24 25 26 27 28 29 30 31 32 33 34 35 36
+#> 
+#> $cad002
+#>  [1] 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35
+#> [24] 36  1  2  3  4  5  6  7  8  9 10 11 12
+#> 
+#> $cad003
+#>  [1] 25 26 27 28 29 30 31 32 33 34 35 36  1  2  3  4  5  6  7  8  9 10 11
+#> [24] 12 13 14 15 16 17 18 19 20 21 22 23 24
+#> 
+#> attr(,"class")
+#> [1] "itens_caderno" "list"
 ```
 
 A partir da criação do objeto `itcaderno` através da função `gera_itens_caderno`
@@ -91,17 +86,24 @@ código do item (codigo), gabarito (gab), sequencial do item no BilogMg (itemblg
 nome do item no BilogMg (nomeblg) e, parâmetros estimados do item (a, b, c).
 O objeto `gabpar05P` é referente à uma prova de Língua Portuguesa.
 
-```{r gabarito}
+
+```r
 data("gabpar05P")
 ```
 
-```{r tab_gabarito, echo = FALSE}
-knitr::kable(gabpar05P[1:10,], 
-             row.names = F,
-             digits = 5, 
-             align = c('c', 'c', 'c', 'l', 'c', 'r', 'l', 'r', 'r', 'r'),
-             caption = 'Informação dos itens 10 primeiros itens da prova')
-```
+
+| it | bl | ob |codigo   | gab | itemblg|nomeblg  |       a|        b|       c|
+|:--:|:--:|:--:|:--------|:---:|-------:|:--------|-------:|--------:|-------:|
+| 1  | 1  | 1  |ET37VCGK |  A  |     289|P1405161 | 1.76333| -2.28170| 0.24426|
+| 2  | 1  | 2  |EG3HDY2A |  C  |     181|P1405027 | 1.62790| -0.84509| 0.24234|
+| 3  | 1  | 3  |S3R9J4DX |  A  |     283|P1405155 | 1.61388| -0.72356| 0.16392|
+| 4  | 1  | 4  |2CQCA6BR |  A  |     224|P1405080 | 1.94336| -0.88177| 0.22066|
+| 5  | 1  | 5  |7PEL7XMD |  D  |     161|P1405001 | 1.10930| -1.81344| 0.19610|
+| 6  | 1  | 6  |3CEAPD2C |  D  |     162|P1405002 | 0.63156|  0.85766| 0.10988|
+| 7  | 1  | 7  |YGFKP7P2 |  C  |     242|P1405102 | 0.48664|  0.61341| 0.20962|
+| 8  | 1  | 8  |EJJWJ5UK |  A  |     176|P1405020 | 1.24909| -0.41949| 0.25287|
+| 9  | 1  | 9  |6HLMGZCG |  B  |     206|P1405058 | 0.88217| -1.23513| 0.31195|
+| 10 | 1  | 10 |EZ4UWZ9D |  A  |     180|P1405025 | 1.45490| -1.25887| 0.31770|
 
 A função `estrutura_prova` faz uso de alguns argumentos, todos **obrigatórios**.
 A seguir, uma descrição de cada um dos parâmetros usados na função.
@@ -133,7 +135,8 @@ anteriormente fornecidas.
 Assim, para o caso da prova de Língua Portuguesa de 36 itens a função 
 `estrutura_prova` deve ser utilizada como apresentado:
 
-```{r, echo = TRUE, results = 'hide'}
+
+```r
 str_prova <- estrutura_prova(
                 itens_caderno = itcaderno,
                 coditem = gabpar05P$codigo,
@@ -148,8 +151,24 @@ str_prova <- estrutura_prova(
 O resultado é um objeto da classe `estrutura_prova` que tem seu próprio método 
 de impressão. 
 
-```{r}
+
+```r
 print(str_prova, len = 1)
+#> ***------------------------------------------------------------*** 
+#> ***------------------------------------------------------------*** 
+#> ***------------------------------------------------------------*** 
+#>  Item:  001   |  Codigo:   ET37VCGK 
+#>  
+#>  Tipo:  dicotomico 
+#>  Gabarito:  A 
+#> 
+#>  Esquema de pontuacao: 
+#>    Acerto: 1 
+#>    Erro  : 0
+#> 
+#> 
+#> 
+#>  Exibidos apenas os 1 primeiros itens!
 ```
 
 O objeto `str_prova` gerado é, na realidade, uma lista com dois 
@@ -165,8 +184,30 @@ quantidade de cadernos em que o item aparece. `cad` identifica o sequencial do c
 e `pos` a posição do item no caderno de provas.
 
 
-```{r}
+
+```r
 str_prova$info_item$it001
+#> $coditem
+#> [1] "ET37VCGK"
+#> 
+#> $tipo_item
+#> [1] "dicotomico"
+#> 
+#> $gabarito
+#>   respostas pontuacao codificacao
+#> 1         A         1           1
+#> 2         B         0           0
+#> 3         C         0           0
+#> 4         D         0           0
+#> 5         E         0           0
+#> 6         *         0           0
+#> 7                   0           0
+#> 
+#> $posicao
+#>        cad pos
+#> cad001   1   1
+#> cad002   2  25
+#> cad003   3  13
 ```
 
 ## Obtendo os Escores
@@ -178,18 +219,22 @@ bem como proficiências e informações sócio-econômicas de alunos em
 avaliações de Língua Portuguesa, Matemática, Ciências da Natureza e Ciências
 Humanas.
 
-```{r dados}
+
+```r
 data("quest_dados")
 dados05P <- quest_dados[!is.na(quest_dados$cad_por),
                         c('codesc', 'turma', 'id', 'cad_por', 'rsp_por', 'profi_por')]
 ```
 
-```{r, echo = FALSE}
-dados05P %>% 
-  head %>% 
-  knitr::kable(, digits = 1, row.names = F, 
-               caption = 'Primeiras 5 linhas do conjunto de dados')
-```
+
+|codesc |turma |id   | cad_por|rsp_por                              | profi_por|
+|:------|:-----|:----|-------:|:------------------------------------|---------:|
+|16     |A     |0001 |       3|DDAACBAADDBDACCADACABAAACCAADDADACAB |     183.8|
+|16     |A     |0002 |       3|ADAACADABDDDACAADBCDBAAABBDDCADABBAB |     229.9|
+|16     |B     |0003 |       2|BBDDCDDABDAAADAACADABADBACACDBCABAAA |     240.0|
+|16     |A     |0004 |       3|ADAACADABADBACAADBCABAACBADDCDDACCAD |     320.2|
+|16     |A     |0005 |       2|BADDCDDBBCAAADDACADABADBACDADBAABAAB |     240.1|
+|16     |A     |0006 |       3|ADAACADABADBACAADBCABAADBADDCDDACCCD |     285.4|
 
 A função `escore` necessida dos parâmetros:
 * `respostas` vetor de caracteres com as respostas dos alunos em cada um dos itens da prova.
@@ -197,7 +242,8 @@ A função `escore` necessida dos parâmetros:
 * `estrutura_prova` objeto resultante da função `estrutura_prova`.
 * `nao_apres` caracter de tamanho 1 que contém o código para o item não apresentado, ex.: `'9'`.
 
-```{r, echo = TRUE, results = 'hide'}
+
+```r
 escore05P <- avaliaR::escore(respostas = dados05P$rsp_por,
     caderno  = dados05P$cad_por,
     estrutura_prova = str_prova,
@@ -205,10 +251,13 @@ escore05P <- avaliaR::escore(respostas = dados05P$rsp_por,
 ```
 
 
-```{r, echo = FALSE}
-escore05P %>% 
-  head %>% 
-  knitr::kable(, digits = 1, row.names = F, 
-               caption = 'Primeiras 5 linhas do escore')
-```
+
+|respostas                            |padrao                               | ntot| nnao_apres| ntried| score| pacer|
+|:------------------------------------|:------------------------------------|----:|----------:|------:|-----:|-----:|
+|ACCADACABAAACCAADDADACABDDAACBAADDBD |110110111110000001000110011110010000 |   36|          0|     36|    17|  47.2|
+|ACAADBCDBAAABBDDCADABBABADAACADABDDD |111110101110101110110010111111111010 |   36|          0|     36|    26|  72.2|
+|ACACDBCABAAABBDDCDDABDAAADAACADABADB |111010111110101111110010111111111111 |   36|          0|     36|    29|  80.6|
+|ACAADBCABAACBADDCDDACCADADAACADABADB |111110111111111111111111111111111111 |   36|          0|     36|    35|  97.2|
+|ACDADBAABAABBADDCDDBBCAAADDACADABADB |110110011110111111100110110111111111 |   36|          0|     36|    28|  77.8|
+|ACAADBCABAADBADDCDDACCCDADAACADABADB |111110111110111111111101111111111111 |   36|          0|     36|    33|  91.7|
 
